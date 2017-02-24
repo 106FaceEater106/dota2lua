@@ -84,7 +84,7 @@ function brstle.StartCombo()
       
       if not oneToggle then
       
-        brstle.DoBasic(nasalgoo,champMana,getMyChamp,hero)
+       brstle.DoBasic(agha,nasalgoo,spray,champMana,getMyChamp,hero,agha)
       
       end
       
@@ -97,25 +97,17 @@ function brstle.StartCombo()
       -- Log.Write("Toggle: "..tostring(oneToggle))
      
 
-     brstle.DoBasic(nasalgoo,champMana,getMyChamp,hero)
+     brstle.DoBasic(nasalgoo,spray,champMana,getMyChamp,hero,agha)
    
       
   end
 
 end
 
-function brstle.CastSomething(item,champMana,getMenuName)
-  
-    if item and Ability.IsCastable(item,champMana) and Menu.IsEnabled(getMenuName) then 
-      
-        Ability.CastNoTarget(item)
-     
-    end
-  
-end
 
 
-function brstle.DoBasic(nasalgoo,champMana,getMyChamp,hero)
+
+function brstle.DoBasic(nasalgoo,spray,champMana,getMyChamp,hero,agha)
   
      if not Menu.IsEnabled(brstle.autonasal) then
         
@@ -135,6 +127,17 @@ function brstle.DoBasic(nasalgoo,champMana,getMyChamp,hero)
       
       
 end
+
+function brstle.CastSomething(item,champMana,getMenuName)
+  
+    if item and Ability.IsCastable(item,champMana) and Menu.IsEnabled(getMenuName) then 
+      
+        Ability.CastNoTarget(item)
+     
+    end
+  
+end
+
 
 function brstle.DoSomething(skill,champMana,getMyChamp,hero,isTarget)
   
