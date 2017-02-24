@@ -3,9 +3,10 @@
 local brstle = {}
 
 brstle.optionEnable = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Enabled", "")
-brstle.optionKey = Menu.AddKeyOption({"Hero Specific", "Bristle Back"}, "ComboKey", Enum.ButtonCode.KEY_F)
-brstle.autospray = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Auto Spray", "auto spray when enemy get close to you")
-brstle.autonasal = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Auto Nasal Goo", "auto goo when enemy get close to you")
+brstle.optionBasic = Menu.AddKeyOption({"Hero Specific", "Bristle Back"}, "Toggle Auto Quil/Spray Only", Enum.ButtonCode.KEY_G)
+brstle.optionKey = Menu.AddKeyOption({"Hero Specific", "Bristle Back"}, "Tooggle All Combo", Enum.ButtonCode.KEY_F)
+brstle.autospray = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Auto Spray", "auto spray without holding any button when enemy get close to you")
+brstle.autonasal = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Auto Nasal Goo", "auto goo without holding any button when enemy get close to you")
 brstle.useshiva = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Shiva", "use shiva if enemy is closer")
 brstle.usecrimson = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Crimson", "")
 brstle.usepipe = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Pipe", "")
@@ -13,7 +14,6 @@ brstle.usehood = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Hood", "
 brstle.usemail = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use BladeMail", "")
 brstle.usebkb = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Black King Bar", "")
 oneToggle = false;
-
  
 function brstle.OnUpdate()
  if not Menu.IsEnabled(brstle.optionEnable) then return true end
@@ -45,7 +45,7 @@ function brstle.StartCombo()
   local agha = NPC.GetItem(getMyChamp, "item_ultimate_scepter", true)
   local bkb = NPC.GetItem(getMyChamp, "item_black_king_bar", true)
   
-  
+
   
   if Menu.IsEnabled(brstle.autospray) then
     
@@ -63,13 +63,13 @@ function brstle.StartCombo()
   
   end
   
-  if Menu.IsKeyDownOnce(brstle.optionKey) then
+  if Menu.IsKeyDownOnce(brstle.optionBasic) then
        oneToggle = not oneToggle; 
   end
   
-  if  oneToggle then 
- 
- 
+  if Menu.IsKeyDown(brstle.optionKey) then
+      
+       
       brstle.CastSomething(shiva,champMana,brstle.useshiva)
       
       brstle.CastSomething(crson,champMana,brstle.usecrimson)
@@ -81,9 +81,43 @@ function brstle.StartCombo()
       brstle.CastSomething(bkb,champMana,brstle.usebkb)
       
       brstle.CastSomething(pipe,champMana,brstle.usepipe)
-
+      
+      if not oneToggle then
+      
+        brstle.DoBasic(nasalgoo,champMana,getMyChamp,hero)
+      
+      end
+      
+      
+  end
+  
+  
+  if  oneToggle then 
     
-      if not Menu.IsEnabled(brstle.autonasal) then
+      -- Log.Write("Toggle: "..tostring(oneToggle))
+     
+
+     brstle.DoBasic(nasalgoo,champMana,getMyChamp,hero)
+   
+      
+  end
+
+end
+
+function brstle.CastSomething(item,champMana,getMenuName)
+  
+    if item and Ability.IsCastable(item,champMana) and Menu.IsEnabled(getMenuName) then 
+      
+        Ability.CastNoTarget(item)
+     
+    end
+  
+end
+
+
+function brstle.DoBasic(nasalgoo,champMana,getMyChamp,hero)
+  
+     if not Menu.IsEnabled(brstle.autonasal) then
         
         if agha then
           brstle.DoSomething(nasalgoo,champMana,getMyChamp,hero,false)
@@ -99,18 +133,7 @@ function brstle.StartCombo()
           
       end
       
-  end
-
-end
-
-function brstle.CastSomething(item,champMana,getMenuName)
-  
-    if item and Ability.IsCastable(item,champMana) and Menu.IsEnabled(getMenuName) then 
       
-        Ability.CastNoTarget(item)
-     
-    end
-  
 end
 
 function brstle.DoSomething(skill,champMana,getMyChamp,hero,isTarget)
