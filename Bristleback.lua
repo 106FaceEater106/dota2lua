@@ -12,7 +12,7 @@ brstle.usepipe = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Pipe", "
 brstle.usehood = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Hood", "")
 brstle.usemail = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use BladeMail", "")
 brstle.usebkb = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Black King Bar", "")
-
+oneToggle = false;
 
  
 function brstle.OnUpdate()
@@ -63,9 +63,13 @@ function brstle.StartCombo()
   
   end
   
-  if Menu.IsKeyDown(brstle.optionKey) then 
+  if Menu.IsKeyDownOnce(brstle.optionKey) then
+       oneToggle = not oneToggle; 
+  end
+  
+  if  oneToggle then 
  
-    
+ 
       brstle.CastSomething(shiva,champMana,brstle.useshiva)
       
       brstle.CastSomething(crson,champMana,brstle.usecrimson)
