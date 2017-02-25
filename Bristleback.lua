@@ -4,6 +4,7 @@ local brstle = {}
 
 brstle.optionEnable = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Enabled", "")
 brstle.optionBasic = Menu.AddKeyOption({"Hero Specific", "Bristle Back"}, "Toggle Auto Quil/Spray Only", Enum.ButtonCode.KEY_G)
+brstle.optionQuil = Menu.AddKeyOption({"Hero Specific", "Bristle Back"}, "Toggle Auto Spray Only", Enum.ButtonCode.KEY_H)
 brstle.optionKey = Menu.AddKeyOption({"Hero Specific", "Bristle Back"}, "Tooggle All Combo", Enum.ButtonCode.KEY_F)
 brstle.autospray = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Auto Spray", "auto spray without holding any button when enemy get close to you")
 brstle.autonasal = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Auto Nasal Goo", "auto goo without holding any button when enemy get close to you")
@@ -14,6 +15,7 @@ brstle.usehood = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Hood", "
 brstle.usemail = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use BladeMail", "")
 brstle.usebkb = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Black King Bar", "")
 oneToggle = false;
+SprayToggle = false;
  
 function brstle.OnUpdate()
  if not Menu.IsEnabled(brstle.optionEnable) then return true end
@@ -67,6 +69,10 @@ function brstle.StartCombo()
        oneToggle = not oneToggle; 
   end
   
+  if Menu.IsKeyDownOnce(brstle.optionQuil) then
+       SprayToggle = not SprayToggle; 
+  end
+  
   if Menu.IsKeyDown(brstle.optionKey) then
       
        
@@ -84,20 +90,29 @@ function brstle.StartCombo()
       
       if not oneToggle then
       
-       brstle.DoBasic(agha,nasalgoo,spray,champMana,getMyChamp,hero,agha)
+       brstle.DoBasic(agha,nasalgoo,spray,champMana,getMyChamp,hero,agha,false)
       
       end
       
       
   end
   
-  
+  -- both nasal and spray spam
   if  oneToggle then 
     
       -- Log.Write("Toggle: "..tostring(oneToggle))
      
 
-     brstle.DoBasic(nasalgoo,spray,champMana,getMyChamp,hero,agha)
+     brstle.DoBasic(nasalgoo,spray,champMana,getMyChamp,hero,agha,false)
+   
+      
+  end
+  
+  -- spray only if you are runnning and you dont want to turn back
+  if  SprayToggle then 
+  
+
+     brstle.DoBasic(nasalgoo,spray,champMana,getMyChamp,hero,agha,true)
    
       
   end
@@ -107,15 +122,19 @@ end
 
 
 
-function brstle.DoBasic(nasalgoo,spray,champMana,getMyChamp,hero,agha)
+function brstle.DoBasic(nasalgoo,spray,champMana,getMyChamp,hero,agha,oneonly)
   
      if not Menu.IsEnabled(brstle.autonasal) then
         
-        if agha then
-          brstle.DoSomething(nasalgoo,champMana,getMyChamp,hero,false)
-        else
-          brstle.DoSomething(nasalgoo,champMana,getMyChamp,hero,true)
-        end
+        if not oneonly then
+          
+          if agha then
+            brstle.DoSomething(nasalgoo,champMana,getMyChamp,hero,false)
+          else
+            brstle.DoSomething(nasalgoo,champMana,getMyChamp,hero,true)
+          end
+          
+        end  
         
       end
       
