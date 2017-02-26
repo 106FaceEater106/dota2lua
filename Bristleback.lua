@@ -2,18 +2,18 @@
 
 local brstle = {}
 
-brstle.optionEnable = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Enabled", "")
-brstle.optionBasic = Menu.AddKeyOption({"Hero Specific", "Bristle Back"}, "Toggle Auto Quil/Spray Only", Enum.ButtonCode.KEY_G)
-brstle.optionQuil = Menu.AddKeyOption({"Hero Specific", "Bristle Back"}, "Toggle Auto Spray Only", Enum.ButtonCode.KEY_H)
-brstle.optionKey = Menu.AddKeyOption({"Hero Specific", "Bristle Back"}, "Tooggle All Combo", Enum.ButtonCode.KEY_F)
-brstle.autospray = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Auto Spray", "auto spray without holding any button when enemy get close to you")
-brstle.autonasal = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Auto Nasal Goo", "auto goo without holding any button when enemy get close to you")
-brstle.useshiva = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Shiva", "use shiva if enemy is closer")
-brstle.usecrimson = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Crimson", "")
-brstle.usepipe = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Pipe", "")
-brstle.usehood = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Hood", "")
-brstle.usemail = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use BladeMail", "")
-brstle.usebkb = Menu.AddOption({"Hero Specific", "Bristle Back"}, "Use Black King Bar", "")
+brstle.optionEnable = Menu.AddOption({"Dj-jom2x Script's", "BristleBack"}, "Enabled", "")
+brstle.optionBasic = Menu.AddKeyOption({"Dj-jom2x Script's", "BristleBack"}, "Toggle Auto Quil/Spray Only", Enum.ButtonCode.KEY_G)
+brstle.optionQuil = Menu.AddKeyOption({"Dj-jom2x Script's", "BristleBack"}, "Toggle Auto Spray Only", Enum.ButtonCode.KEY_H)
+brstle.optionKey = Menu.AddKeyOption({"Dj-jom2x Script's", "BristleBack"}, "Tooggle All Combo", Enum.ButtonCode.KEY_F)
+brstle.autospray = Menu.AddOption({"Dj-jom2x Script's", "BristleBack"}, "Use Auto Spray", "auto spray without holding any button when enemy get close to you")
+brstle.autonasal = Menu.AddOption({"Dj-jom2x Script's", "BristleBack"}, "Use Auto Nasal Goo", "auto goo without holding any button when enemy get close to you")
+brstle.useshiva = Menu.AddOption({"Dj-jom2x Script's", "BristleBack"}, "Use Shiva", "use shiva if enemy is closer")
+brstle.usecrimson = Menu.AddOption({"Dj-jom2x Script's", "BristleBack"}, "Use Crimson", "")
+brstle.usepipe = Menu.AddOption({"Dj-jom2x Script's", "BristleBack"}, "Use Pipe", "")
+brstle.usehood = Menu.AddOption({"Dj-jom2x Script's", "BristleBack"}, "Use Hood", "")
+brstle.usemail = Menu.AddOption({"Dj-jom2x Script's", "BristleBack"}, "Use BladeMail", "")
+brstle.usebkb = Menu.AddOption({"Dj-jom2x Script's", "BristleBack"}, "Use Black King Bar", "")
 oneToggle = false;
 SprayToggle = false;
  
@@ -32,7 +32,6 @@ function brstle.StartCombo()
   
   -- own abilities
   
-  local heroPos = NPC.GetAbsOrigin(hero)
   local nasalgoo = NPC.GetAbilityByIndex(getMyChamp,0)
   local spray = NPC.GetAbilityByIndex(getMyChamp,1)
   local champMana = NPC.GetMana(getMyChamp)
