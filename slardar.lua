@@ -10,6 +10,7 @@ slardar.useshiva = Menu.AddOption({"Dj-jom2x Script's", "Slardar"}, "Use Shiva",
 slardar.usemail = Menu.AddOption({"Dj-jom2x Script's", "Slardar"}, "Use Blade Mail", "")
 slardar.usearmlet = Menu.AddOption({"Dj-jom2x Script's", "Slardar"}, "Use Armlet", "")
 slardar.usecrimson  = Menu.AddOption({"Dj-jom2x Script's", "Slardar"}, "Use Crimson", "")
+ToggleOff = false
 
 function slardar.OnUpdate()
   
@@ -46,10 +47,10 @@ function slardar.StartCombo()
   
   -- modifiers
   local track_mod = "modifier_slardar_amplify_damage" 
- 
+
   -- Logics
   
-  if Menu.IsEnabled(slardar.autoTrack) and slardar.DoChecking(Enemy,track_mod,false) then
+  if Menu.IsEnabled(slardar.autoTrack) and slardar.DoChecking(Enemy,track_mod,false) and not ToggleOff then
     
     slardar.DoSomething(Track,MyMana,MyChamp,Enemy,Ability.GetCastRange(Track),2)
 
@@ -57,38 +58,49 @@ function slardar.StartCombo()
  
   if Menu.IsKeyDown(slardar.optionKey) then
     
-    if not NPC.HasState(Enemy, Enum.ModifierState.MODIFIER_STATE_MAGIC_IMMUNE) then
-      
-      slardar.DoSomething(Sprint,MyMana,MyChamp,Enemy,1800,1)
-      
-      slardar.DoSomething(blink,MyMana,MyChamp,Enemy,1200,3)
-    
-      slardar.DoSomething(Stun,MyMana,MyChamp,Enemy,340,1)
-      
-       
-        if NPC.HasState(Enemy, Enum.ModifierState.MODIFIER_STATE_STUNNED) then
-          
-          if not Menu.IsEnabled(slardar.autoTrack) and slardar.DoChecking(Enemy,track_mod,false) then
+      if not NPC.HasState(Enemy, Enum.ModifierState.MODIFIER_STATE_MAGIC_IMMUNE) then
         
-            slardar.DoSomething(Track,MyMana,MyChamp,Enemy,Ability.GetCastRange(Track),2)
-
-          end
-    
-          slardar.CastSomething(bkb,MyMana,slardar.usebkb,false)
+        ToggleOff = true
+        
+        slardar.DoSomething(Sprint,MyMana,MyChamp,Enemy,1800,1)
+        
+        if not blink then
           
-          slardar.CastSomething(armlet,MyMana,slardar.usearmlet,true)
+          slardar.DoSomething(Stun,MyMana,MyChamp,Enemy,320,1)
+           
+        else
           
-          slardar.CastSomething(crson,MyMana,slardar.usecrimson,false)
-          
-          slardar.CastSomething(bm,MyMana,slardar.usemail,false)
-          
-          slardar.CastSomething(shiva,MyMana,slardar.useshiva,false)
-      
+          slardar.DoSomething(blink,MyMana,MyChamp,Enemy,1200,3)
+          slardar.DoSomething(Stun,MyMana,MyChamp,Enemy,340,1)
+           
         end
+        
+          if NPC.HasState(Enemy, Enum.ModifierState.MODIFIER_STATE_STUNNED) then
+            
+            if slardar.DoChecking(Enemy,track_mod,false) then
+          
+              slardar.DoSomething(Track,MyMana,MyChamp,Enemy,Ability.GetCastRange(Track),2)
+
+            end
       
-    end
-    
+            slardar.CastSomething(bkb,MyMana,slardar.usebkb,false)
+            
+            slardar.CastSomething(armlet,MyMana,slardar.usearmlet,true)
+            
+            slardar.CastSomething(crson,MyMana,slardar.usecrimson,false)
+            
+            slardar.CastSomething(bm,MyMana,slardar.usemail,false)
+            
+            slardar.CastSomething(shiva,MyMana,slardar.useshiva,false)
+        
+          end
+        
+      end
+  else
+      ToggleOff = false
   end  
+  
+  
 
 end
 
@@ -122,7 +134,7 @@ function slardar.DoSomething(skill,MyMana,MyChamp,Enemy,CastRange,Action)
       elseif Action == 3 then
         Ability.CastPosition(skill,NPC.GetAbsOrigin(Enemy))
       end
-  return end
+  end
   
 end
 
@@ -131,9 +143,13 @@ function slardar.CastSomething(item,MyMana,MenuName,isToogle)
     if item and Ability.IsCastable(item,MyMana) and Menu.IsEnabled(MenuName) then 
       
         if isToogle then
-          Ability.Toggle(item)
+          
+          if not Ability.GetToggleState(item) then
+            Ability.Toggle(item)
+          end         
+          
         else
-          Ability.CastNoTarget(item)
+            Ability.CastNoTarget(item)
         end   
      
     end
