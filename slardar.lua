@@ -75,7 +75,7 @@ function slardar.StartCombo()
           if not NPC.IsEntityInRange(Enemy,MyChamp,200) then -- dont blink if so close lol :3
             slardar.DoSomething(blink,MyMana,MyChamp,Enemy,1200,3)
           end
-          slardar.DoSomething(Stun,MyMana,MyChamp,Enemy,340,1)
+          slardar.DoSomething(Stun,MyMana,MyChamp,Enemy,300,1)
            
         end
         
