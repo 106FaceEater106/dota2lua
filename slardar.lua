@@ -2,14 +2,14 @@
 
 local slardar ={}
 
-slardar.optionEnable = Menu.AddOption({"Dj-jom2x Script's", "Slardar"}, "Enabled", "")
-slardar.optionKey = Menu.AddKeyOption({"Dj-jom2x Script's", "Slardar"}, "ComboKey", Enum.ButtonCode.KEY_F)
-slardar.autoTrack = Menu.AddOption({"Dj-jom2x Script's", "Slardar"}, "Use Auto Track", "")
-slardar.usebkb = Menu.AddOption({"Dj-jom2x Script's", "Slardar"}, "Use Black King Bar", "")
-slardar.useshiva = Menu.AddOption({"Dj-jom2x Script's", "Slardar"}, "Use Shiva", "")
-slardar.usemail = Menu.AddOption({"Dj-jom2x Script's", "Slardar"}, "Use Blade Mail", "")
-slardar.usearmlet = Menu.AddOption({"Dj-jom2x Script's", "Slardar"}, "Use Armlet", "")
-slardar.usecrimson  = Menu.AddOption({"Dj-jom2x Script's", "Slardar"}, "Use Crimson", "")
+slardar.optionEnable = Menu.AddOption({"Dj-jom2x Script's","Hero Specific",  "Slardar"}, "Enabled", "")
+slardar.optionKey = Menu.AddKeyOption({"Dj-jom2x Script's","Hero Specific",  "Slardar"}, "ComboKey", Enum.ButtonCode.KEY_F)
+slardar.autoTrack = Menu.AddOption({"Dj-jom2x Script's","Hero Specific",  "Slardar"}, "Use Auto Track", "")
+slardar.usebkb = Menu.AddOption({"Dj-jom2x Script's","Hero Specific",  "Slardar"}, "Use Black King Bar", "")
+slardar.useshiva = Menu.AddOption({"Dj-jom2x Script's","Hero Specific",  "Slardar"}, "Use Shiva", "")
+slardar.usemail = Menu.AddOption({"Dj-jom2x Script's","Hero Specific",  "Slardar"}, "Use Blade Mail", "")
+slardar.usearmlet = Menu.AddOption({"Dj-jom2x Script's","Hero Specific",  "Slardar"}, "Use Armlet", "")
+slardar.usecrimson  = Menu.AddOption({"Dj-jom2x Script's","Hero Specific",  "Slardar"}, "Use Crimson", "")
 ToggleOff = false
 
 function slardar.OnUpdate()
@@ -64,13 +64,17 @@ function slardar.StartCombo()
         
         slardar.DoSomething(Sprint,MyMana,MyChamp,Enemy,1800,1)
         
+        Player.PrepareUnitOrders(Players.GetLocal(), 4, Enemy, Vector(0,0,0), Enemy, Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_PASSED_UNIT_ONLY, myHero)
+    
+        
         if not blink then
           
           slardar.DoSomething(Stun,MyMana,MyChamp,Enemy,320,1)
            
         else
-          
-          slardar.DoSomething(blink,MyMana,MyChamp,Enemy,1200,3)
+          if not NPC.IsEntityInRange(Enemy,MyChamp,200) then -- dont blink if so close lol :3
+            slardar.DoSomething(blink,MyMana,MyChamp,Enemy,1200,3)
+          end
           slardar.DoSomething(Stun,MyMana,MyChamp,Enemy,340,1)
            
         end
